@@ -3,9 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Song</title>
+   <script>
+    function startCountdown(targetDate, elementId) {
+	const targetTime = new Date(targetDate).getTime();
+	const displayElement = document.getElementById(elementId);
+  
+	if (!displayElement) {
+	  console.error("Element not found!");
+	  return;
+	}
+  
+	function updateCountdown() {
+	  const currentTime = new Date().getTime();
+	  const timeRemaining = targetTime - currentTime;
+  
+	  if (timeRemaining <= 0) {
+		clearInterval(timerInterval);
+		displayElement.textContent = "Time's up!";
+		return;
+	  }
+  
+	  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+	  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	  const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+	  const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+  
+	  displayElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+	}
+  
+	 // Check if the target date is valid
+	 if (isNaN(targetTime)) {
+		console.error(`Invalid date format: ${targetDate}`);
+		displayElement.textContent = "Invalid date!";
+		return;
+	  }
+	
+	  // Start the interval to update the countdown every second
+	  const timerInterval = setInterval(updateCountdown, 1000);
+	
+	  // Update immediately to avoid 1-second delay
+	  updateCountdown();
+}
+   </script>
+    <link rel="stylesheet" href="css/default.css">
 </head>
 <body>
-    
+    <!-- <div id="mainDiv" class="flex flex-col items-center justify-center h-screen bg-[#ffe]"> -->
+        <h1 id="heartspan" class="text-4xl text-red-500 font-bold mb-4">Countdown for the other gift</h1>
+        <div id="countdown">00d 00h 00m 00s</div>
+    <!-- </div> -->
+    <script>
+        // Initialize the countdown
+        startCountdown("2024-12-31 00:00:00", "countdown");
+      </script>
+   
 </body>
 </html>
